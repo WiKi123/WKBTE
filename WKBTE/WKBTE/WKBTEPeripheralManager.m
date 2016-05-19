@@ -235,16 +235,17 @@ static WKBTEPeripheralManager *helper;
     //delegate 给出去外面一个通知什么的，表明已经连接上了
     [self.managerDelegate bleMangerConnectedPeripheral:peripheral andIfConnected:YES];
     
-    
-    //读取所有server。但是有时候，不一定要读取所有的server。可以通过下面的方法书写。
-    [self.currentperipheral discoverServices:nil];
-    
+
+#warning 读取所有server。但是有时候，不一定要读取所有的server。可以通过下面的方法书写。
     
     //我们直接一次读取外设的所有的Services ,如果只想找某个服务，直接传数组进去就行，比如你只想扫描服务UUID为 FFF1和FFE2 的这两项服务
     /*
      NSArray *array_service = [NSArray arrayWithObjects:[CBUUID UUIDWithString:@"FFF1"], [CBUUID UUIDWithString:@"FFE2"],nil];
      [m_peripheral discoverServices:array_service];
      */
+    
+    [self.currentperipheral discoverServices:nil];
+
     
 }
 
@@ -281,7 +282,7 @@ static WKBTEPeripheralManager *helper;
     //自己看看官方的说明，这个函数被调用是有前提条件的，首先你的要先调用过了 connectPeripheral:options:这个方法，其次是如果这个函数被回调的原因不是因为你主动调用了 cancelPeripheralConnection 这个方法，那么说明，整个蓝牙连接已经结束了，不会再有回连的可能，得要重来了
     NSLog(@"断开连接");
     
-    //TODO 需要确定一下
+#error 需要确定一下，是否删除了。
     [self.allConnectPeripheral removeObject:peripheral];
     
     
@@ -306,8 +307,7 @@ static WKBTEPeripheralManager *helper;
     
     //这个函数一般不会被调用，他被调用是因为 peripheral.name 被修改了，才会被调用
     
-
-    //如果不会断开连接
+#error 会不会断开连接？？
     //TODO
     [self.allConnectPeripheral removeObject:self.currentperipheral];
     [self.allConnectPeripheral addObject:peripheral];
